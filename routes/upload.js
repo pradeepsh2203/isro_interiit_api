@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const multer = require("multer");
+const { runModel } = require("../helper/runScript");
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
 		return cb(null, "./uploads");
@@ -15,8 +16,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post("/", upload.single("file"), (req, res) => {
+router.post("/", upload.single("file"), async (req, res) => {
 	console.log(req.file);
+	const result = await runModel();
+	console.log(result, "Result");
 	res.send("File recieved");
 });
 

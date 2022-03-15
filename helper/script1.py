@@ -1,0 +1,1 @@
+print("Wow The script works!!")
