@@ -1,0 +1,3 @@
+rise,decay,type,rise_start,peaks_time,decay_end,peak_values,bg_for_this_peak,rise_rate
+1,12,1,0,3,5,2,6,8
+1,12,1,0,3,5,2,6,8
