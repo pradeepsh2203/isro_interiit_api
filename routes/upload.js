@@ -22,10 +22,10 @@ router.post("/", upload.single("file"), preProcessing, async (req, res) => {
 	try {
 		let dataToSend;
 		const python = spawn("python", [__dirname + "/../scripts/script.py"]);
-
-		python.stdin.write(req.file.fileName);
+		// console.log("THe filename in the script", req.file.filename);
+		python.stdin.write(req.file.filename);
 		python.stdin.end();
-
+		// console.log("Inputed Value");
 		python.stdout.on("data", (data) => {
 			dataToSend = data.toString();
 		});
@@ -36,10 +36,12 @@ router.post("/", upload.single("file"), preProcessing, async (req, res) => {
 		});
 
 		python.on("close", (code) => {
+			// console.log("Final Results", dataToSend);
 			result = saveFile(dataToSend);
 			res.status(200).send(result);
 		});
 	} catch (err) {
+		console.log("Error in upload File", err.message);
 		res.status(503);
 		if (err.message === "err-script") {
 			res.send("Error Occured in Model");
